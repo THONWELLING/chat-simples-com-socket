@@ -1,0 +1,22 @@
+{
+  "name": "chat-simples-com-socket",
+  "version": "1.0.0",
+  "description": "Chat usando socket ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/THONWELLING/chat-simples-com-socket.git"
+  },
+  "author": "ThonWelling",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/THONWELLING/chat-simples-com-socket/issues"
+  },
+  "homepage": "https://github.com/THONWELLING/chat-simples-com-socket#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
