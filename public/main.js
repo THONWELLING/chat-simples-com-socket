@@ -29,10 +29,20 @@ function addMessage(type, user, msg) {
       ul.innerHTML += '<li class="m-status">' + msg + "</li>";
       break;
     case "msg":
-      ul.innerHTML +=
-        '<li class="m-txt"><span>' + user + "</span> " + msg + "</li>";
+      if (userName == user) {
+        ul.innerHTML +=
+          '<li class="m-txt"><span class="me">' +
+          user +
+          "</span> " +
+          msg +
+          "</li>";
+      } else {
+        ul.innerHTML +=
+          '<li class="m-txt"><span>' + user + "</span> " + msg + "</li>";
+      }
       break;
   }
+  ul.scrollTop = ul.scrollHeight;
 }
 
 loginInput.addEventListener("keyup", (e) => {
@@ -41,7 +51,6 @@ loginInput.addEventListener("keyup", (e) => {
     if (name != "") {
       userName = name;
       document.title = "Chat (" + userName + ")";
-
       socket.emit("join-request", userName);
     }
   }
@@ -83,4 +92,22 @@ socket.on("list-update", (data) => {
 
 socket.on("show-msg", (data) => {
   addMessage("msg", data.userName, data.message);
+});
+
+socket.on("disconnect", () => {
+  addMessage("status", null, "You Are Disconnected!");
+  userList = [];
+  renderUserList();
+});
+
+socket.on("reconnect_error", () => {
+  addMessage("status", null, "Trying To Reconnect...");
+});
+
+socket.on("reconnect", () => {
+  addMessage("status", null, "Reconnected!");
+
+  if (userName != "") {
+    socket.emit("join-request", userName);
+  }
 });
